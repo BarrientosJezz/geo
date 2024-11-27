@@ -1,11 +1,10 @@
-pip install folium streamlit
-
 import streamlit as st
 import pandas as pd
 import numpy as np
 import folium
 from streamlit_folium import folium_static
 import math
+import os
 
 def limpiar_coordenadas(geo):
     """
@@ -46,9 +45,8 @@ def calcular_distancia(coord1, coord2):
 def main():
     st.title('🗺️ Buscador de Rutas Cercanas')
     
-    # Cargar datos
-    #ruta_archivo = r'C:\Users\ebarrientos\OneDrive - NUR SRL\Documentos\R\Nueva carpeta\GEOS.xlsx'
-    ruta_archivo = r'C:\Users\ebarrientos\OneDrive - NUR SRL\Documentos\R\Nueva carpeta\GEOS.xlsx'
+    # Usar ruta relativa para el archivo Excel
+    ruta_archivo = 'GEOS.xlsx'
     
 
     try:
