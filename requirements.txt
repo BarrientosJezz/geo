@@ -1,7 +1,6 @@
-pip install --upgrade pip
-streamlit
-pandas
-numpy
-folium==0.12.1.post1
-math
-os
+python -m venv myenv
+source myenv/bin/activate  # En Linux/Mac
+# o
+myenv\Scripts\activate  # En Windows
+
+pip install streamlit folium
