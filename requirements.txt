@@ -1,6 +1,5 @@
-python -m venv myenv
-source myenv/bin/activate  # En Linux/Mac
-# o
-myenv\Scripts\activate  # En Windows
+streamlit==1.40.2
+folium==0.12.1
+pandas
+numpy
 
-pip install streamlit folium
