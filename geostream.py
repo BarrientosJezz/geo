@@ -10,10 +10,40 @@ def limpiar_coordenadas(geo):
     """
     Limpia la coordenada GEO eliminando espacios
     Convierte a formato flotante
+    Maneja diferentes formatos: con coma, sin coma, con espacios
     """
     try:
-        # Eliminar espacios y separar
-        coords = str(geo).replace(' ', '').split(',')
+        geo_str = str(geo).replace(' ', '')
+        
+        # Verificar si tiene coma
+        if ',' in geo_str:
+            coords = geo_str.split(',')
+        else:
+            # Si no tiene coma, buscar donde termina el primer número negativo
+            # Formato: -13.262719-64.052359
+            if geo_str.startswith('-'):
+                # Encontrar el segundo signo menos
+                segundo_menos = geo_str.find('-', 1)
+                if segundo_menos != -1:
+                    coords = [geo_str[:segundo_menos], geo_str[segundo_menos:]]
+                else:
+                    # Formato positivo-negativo: 13.262719-64.052359
+                    menos_pos = geo_str.find('-')
+                    if menos_pos != -1:
+                        coords = [geo_str[:menos_pos], geo_str[menos_pos:]]
+                    else:
+                        # No hay separador claro
+                        return None
+            else:
+                # Formato positivo-negativo
+                menos_pos = geo_str.find('-')
+                if menos_pos != -1:
+                    coords = [geo_str[:menos_pos], geo_str[menos_pos:]]
+                else:
+                    # Buscar punto decimal para dividir (asumiendo formato sin separador)
+                    # Este es un caso más complejo, mejor retornar None
+                    return None
+        
         return [float(coords[0]), float(coords[1])]
     except Exception as e:
         st.error(f"Error limpiando coordenada {geo}: {e}")
@@ -136,11 +166,16 @@ def main():
             st.metric("Ruta más Cercana", f"{cercanos.iloc[0]['Distancia']:.2f} km")
         with col3:
             st.metric("Promedio Distancia (Top 5)", f"{cercanos['Distancia'].mean():.2f} km")
+        
+        # Caption al final
+        st.caption("Desarrollado por [Tu Nombre] - Sistema de Búsqueda de Rutas v11/06/2025")
             
     except FileNotFoundError:
         st.error("❌ No se encontró el archivo 'GEOS.xlsx'. Asegúrate de que esté en el directorio correcto.")
+        st.caption("Desarrollado por [Tu Nombre] - Sistema de Búsqueda de Rutas v11/06/2025")
     except Exception as e:
         st.error(f"❌ Error procesando datos: {e}")
+        st.caption("Desarrollado por EBG - Sistema de Búsqueda de Rutas")
 
 if __name__ == "__main__":
     main()
