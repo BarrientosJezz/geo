@@ -56,10 +56,10 @@ def main():
         df = df.dropna(subset=['Coordenadas_Limpias'])
 
         # Columnas para mostrar
-        columnas_mostrar = [
-            'GEO', 'Nombre de Ruta', 'Vendedor', 
-            'Supervisor', 'Status SN', 'Dias visita'
-        ]
+       columnas_mostrar = [
+                            'GEO', 'Nombre de Ruta', 'Vendedor', 'Supervisor', 'Status SN', 'Dias visita'
+                            ]
+
 
         # Input de coordenadas
         col1, col2 = st.columns(2)
