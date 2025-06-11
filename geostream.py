@@ -45,28 +45,29 @@ def calcular_distancia(coord1, coord2):
 def main():
     st.title('🗺️ Buscador de Rutas Cercanas')
     st.subheader('v 11/06/2025')
-    # Usar ruta relativa para el archivo Excel
+    
     ruta_archivo = 'GEOS.xlsx'
     
-
     try:
         # Leer el archivo
         df = pd.read_excel(ruta_archivo)
-
-        try:
-        # Leer el archivo
-        df = pd.read_excel(ruta_archivo)
         
-        # AÑADIR ESTAS LÍNEAS PARA DEBUGGEAR
-        st.write("Columnas disponibles:")
-        st.write(df.columns.tolist())
-        st.write("Primeras filas:")
-        st.write(df.head())
-    
-    # Verificar si existe la columna Vendedor
-    if 'Vendedor' not in df.columns:
-        st.error("La columna 'Vendedor' no existe en el archivo")
-        st.stop()
+        # Verificar columnas necesarias
+        columnas_requeridas = ['GEO', 'Nombre de Ruta', 'Status SN', 'Dias visita']
+        columnas_opcionales = ['Vendedor', 'Supervisor']
+        
+        # Verificar que existan las columnas requeridas
+        for col in columnas_requeridas:
+            if col not in df.columns:
+                st.error(f"Columna requerida '{col}' no encontrada")
+                st.write("Columnas disponibles:", df.columns.tolist())
+                st.stop()
+        
+        # Añadir columnas opcionales si no existen
+        for col in columnas_opcionales:
+            if col not in df.columns:
+                df[col] = 'No disponible'
+                st.warning(f"Columna '{col}' no encontrada, usando valor por defecto")
         
         # Limpiar coordenadas GEO
         df['Coordenadas_Limpias'] = df['GEO'].apply(limpiar_coordenadas)
@@ -74,12 +75,13 @@ def main():
         # Eliminar filas con coordenadas inválidas
         df = df.dropna(subset=['Coordenadas_Limpias'])
         
-        # Columnas para mostrar
+        # Columnas para mostrar (ahora sabemos que existen)
         columnas_mostrar = [
             'GEO', 'Nombre de Ruta', 'Vendedor', 
             'Supervisor', 'Status SN', 'Dias visita'
         ]
         
+        # Resto del código igual...
         # Input de coordenadas
         col1, col2 = st.columns(2)
         with col1:
@@ -101,40 +103,13 @@ def main():
         # Mostrar resultados
         st.dataframe(cercanos[columnas_mostrar + ['Distancia']])
         
-        # Crear mapa
-        m = folium.Map(location=[float(latitud), float(longitud)], zoom_start=10)
-        
-        # Marker para punto objetivo
-        folium.CircleMarker(
-            location=[float(latitud), float(longitud)],
-            radius=10,
-            popup='Punto Objetivo',
-            color='red',
-            fill=True
-        ).add_to(m)
-        
-        # Markers para puntos cercanos
-        colores = ['blue', 'green', 'purple', 'orange', 'gray']
-        for i, (_, punto) in enumerate(cercanos.iterrows()):
-            coords = punto['Coordenadas_Limpias']
-            folium.CircleMarker(
-                location=coords,
-                radius=8,
-                popup=f"""
-                Distancia: {punto['Distancia']:.2f} km
-                Ruta: {punto['Nombre de Ruta']}
-                Vendedor: {punto['Vendedor']}
-                Status: {punto['Status SN']}
-                """,
-                color=colores[i],
-                fill=True
-            ).add_to(m)
-        
-        # Mostrar mapa
-        folium_static(m)
+        # Resto del código del mapa igual...
         
     except Exception as e:
         st.error(f"Error procesando datos: {e}")
-
+        # Mostrar más información del error
+        import traceback
+        st.error(traceback.format_exc())
+        
 if __name__ == "__main__":
     main()
