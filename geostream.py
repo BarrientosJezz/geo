@@ -5,6 +5,7 @@ import folium
 from streamlit_folium import folium_static
 import math
 import os
+
 def limpiar_coordenadas(geo):
     """
     Limpia la coordenada GEO eliminando espacios
@@ -17,6 +18,7 @@ def limpiar_coordenadas(geo):
     except Exception as e:
         st.error(f"Error limpiando coordenada {geo}: {e}")
         return None
+
 def calcular_distancia(coord1, coord2):
     """Calcular distancia en kilómetros entre dos coordenadas"""
     try:
@@ -39,6 +41,7 @@ def calcular_distancia(coord1, coord2):
     except Exception as e:
         st.error(f"Error en cálculo de distancia: {e}")
         return np.nan
+
 def main():
     st.title('🗺️ Buscador de Rutas Cercanas')
     st.subheader('v 11/06/2025')
@@ -56,10 +59,9 @@ def main():
         df = df.dropna(subset=['Coordenadas_Limpias'])
 
         # Columnas para mostrar
-       columnas_mostrar = [
-                            'GEO', 'Nombre de Ruta', 'Nombre Vendedor', 'Supervisor', 'Status SN', 'Dias visita'
-                            ]
-
+        columnas_mostrar = [
+            'GEO', 'Nombre de Ruta', 'Nombre Vendedor', 'Supervisor', 'Status SN', 'Dias visita'
+        ]
 
         # Input de coordenadas
         col1, col2 = st.columns(2)
@@ -89,30 +91,7 @@ def main():
         folium.CircleMarker(
             location=[float(latitud), float(longitud)],
             radius=10,
-            popup='Punto Objetivo',
-            color='red',
-            fill=True
-        ).add_to(m)
-
-        # Markers para puntos cercanos
-        colores = ['blue', 'green', 'purple', 'orange', 'gray']
-        for i, (_, punto) in enumerate(cercanos.iterrows()):
-            coords = punto['Coordenadas_Limpias']
-            folium.CircleMarker(
-                location=coords,
-                radius=8,
-                popup=f"""
-                Distancia: {punto['Distancia']:.2f} km
-                Ruta: {punto['Nombre de Ruta']}
-                Vendedor: {punto['Nombre Vendedor']}
-                Status: {punto['Status SN']}
-                """,
-                color=colores[i],
-                fill=True
-            ).add_to(m)
-
-        # Mostrar mapa
-        folium_static(m)
+            popup='Punto
 
     except Exception as e:
         st.error(f"Error procesando datos: {e}")
