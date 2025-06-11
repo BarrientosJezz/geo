@@ -57,7 +57,7 @@ def main():
 
         # Columnas para mostrar
        columnas_mostrar = [
-                            'GEO', 'Nombre de Ruta', 'Vendedor', 'Supervisor', 'Status SN', 'Dias visita'
+                            'GEO', 'Nombre de Ruta', 'Nombre Vendedor', 'Supervisor', 'Status SN', 'Dias visita'
                             ]
 
 
@@ -104,7 +104,7 @@ def main():
                 popup=f"""
                 Distancia: {punto['Distancia']:.2f} km
                 Ruta: {punto['Nombre de Ruta']}
-                Vendedor: {punto['Vendedor']}
+                Vendedor: {punto['Nombre Vendedor']}
                 Status: {punto['Status SN']}
                 """,
                 color=colores[i],
