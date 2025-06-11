@@ -52,6 +52,21 @@ def main():
     try:
         # Leer el archivo
         df = pd.read_excel(ruta_archivo)
+
+        try:
+        # Leer el archivo
+        df = pd.read_excel(ruta_archivo)
+        
+        # AÑADIR ESTAS LÍNEAS PARA DEBUGGEAR
+        st.write("Columnas disponibles:")
+        st.write(df.columns.tolist())
+        st.write("Primeras filas:")
+        st.write(df.head())
+    
+    # Verificar si existe la columna Vendedor
+    if 'Vendedor' not in df.columns:
+        st.error("La columna 'Vendedor' no existe en el archivo")
+        st.stop()
         
         # Limpiar coordenadas GEO
         df['Coordenadas_Limpias'] = df['GEO'].apply(limpiar_coordenadas)
