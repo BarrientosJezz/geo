@@ -168,11 +168,11 @@ def main():
             st.metric("Promedio Distancia (Top 5)", f"{cercanos['Distancia'].mean():.2f} km")
         
         # Caption al final
-        st.caption("Desarrollado por [Tu Nombre] - Sistema de Búsqueda de Rutas v11/06/2025")
+        st.caption("Desarrollado por EBG - Sistema de Búsqueda de Rutas")
             
     except FileNotFoundError:
         st.error("❌ No se encontró el archivo 'GEOS.xlsx'. Asegúrate de que esté en el directorio correcto.")
-        st.caption("Desarrollado por [Tu Nombre] - Sistema de Búsqueda de Rutas v11/06/2025")
+        st.caption("Desarrollado por EBG - Sistema de Búsqueda de Rutas")
     except Exception as e:
         st.error(f"❌ Error procesando datos: {e}")
         st.caption("Desarrollado por EBG - Sistema de Búsqueda de Rutas")
