@@ -91,7 +91,7 @@ def main():
         folium.CircleMarker(
             location=[float(latitud), float(longitud)],
             radius=10,
-            popup='Punto
+            popup=f"
 
     except Exception as e:
         st.error(f"Error procesando datos: {e}")
