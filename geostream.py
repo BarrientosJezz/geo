@@ -95,9 +95,9 @@ def main():
         # Input de coordenadas
         col1, col2 = st.columns(2)
         with col1:
-            latitud = st.text_input('Latitud', '-17.8572415')
+            latitud = st.text_input('Latitud', '-17.7830659')
         with col2:
-            longitud = st.text_input('Longitud', '-63.1895311')
+            longitud = st.text_input('Longitud', '-63.1822989')
         
         # Coordenada objetivo
         punto_objetivo = [float(latitud), float(longitud)]
@@ -179,5 +179,6 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
