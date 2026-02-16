@@ -72,7 +72,7 @@ def calcular_distancia(coord1, coord2):
 
 def main():
     st.title('🗺️ Buscador de Rutas Cercanas')
-    st.subheader('BBDD act. 26/10/25')
+    st.subheader('Nur -Srl')
     
     # Usar ruta relativa para el archivo Excel
     ruta_archivo = 'GEOS.xlsx'
@@ -179,4 +179,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
